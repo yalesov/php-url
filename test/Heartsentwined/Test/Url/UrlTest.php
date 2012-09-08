@@ -9,355 +9,355 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     public function testToAbsolute()
     {
         // Fail on unparsable relative URL
-        $this->assertFalse(Url::toAbsolute(
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             'http://example.com/path?bq#bf',
-            'bad://\slash.com/brac[kets]'));
+            'bad://\slash.com/brac[kets]')));
 
         // Relative URL has scheme, only remove dots from path if hierarchical
         $this->assertSame('http://whatever.com/path/here?rq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                'http://whatever.com/path/./here?rq#rf'));
+                'http://whatever.com/path/./here?rq#rf')));
         $this->assertSame('http://whatever.com/here?rq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                'http://whatever.com/path/../here?rq#rf'));
+                'http://whatever.com/path/../here?rq#rf')));
         $this->assertSame('mailto:user@example.com?subject=hi',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                'mailto:user@example.com?subject=hi'));
+                'mailto:user@example.com?subject=hi')));
         $this->assertSame('mailto:user@whatever.com',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'mailto:bob@example.com',
-                'mailto:user@whatever.com'));
+                'mailto:user@whatever.com')));
         $this->assertSame('mailto:user/../whatever.com',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'mailto:bob@example.com',
-                'mailto:user/../whatever.com'));
+                'mailto:user/../whatever.com')));
 
         // Fail on unparsable base URL
-        $this->assertFalse(Url::toAbsolute(
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             'bad://\slash.com/brac[kets]',
-            '/path/./here?rq#rf'));
+            '/path/./here?rq#rf')));
 
         // Fail on non-absolute base URL missing scheme or host
-        $this->assertFalse(Url::toAbsolute(
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             '//example.com/path?bq#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             '///path?bq#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             '/path?bq#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             'http:/path?bq#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             'path?bq#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             'http:path?bq#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             '?bq#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             'http:?bq#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             '#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             'http:#bf',
-            '/path/./here?rq#rf'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path/./here?rq#rf')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             'mailto:user@example.com',
-            '/path'));
-        $this->assertFalse(Url::toAbsolute(
+            '/path')));
+        $this->assertFalse(rawurldecode(Url::toAbsolute(
             'mailto:user@example.com',
-            '//whatever.com/path'));
+            '//whatever.com/path')));
 
         // Relative URL has authority, fill in scheme and remove dots from path
         $this->assertSame('http://whatever.com',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '//whatever.com'));
+                '//whatever.com')));
         $this->assertSame('http://127.0.0.1',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '//127.0.0.1'));
+                '//127.0.0.1')));
         $this->assertSame('http://whatever.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '//whatever.com/'));
+                '//whatever.com/')));
         $this->assertSame('http://127.0.0.1/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '//127.0.0.1/'));
+                '//127.0.0.1/')));
         $this->assertSame('http://whatever.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '//whatever.com/rpath'));
+                '//whatever.com/rpath')));
         $this->assertSame('http://whatever.com/rpath/?rq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '//whatever.com/rpath/?rq#rf'));
+                '//whatever.com/rpath/?rq#rf')));
         $this->assertSame('http://',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '//'));
+                '//')));
         $this->assertSame('http:///rpath/?rq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '///rpath/?rq#rf'));
+                '///rpath/?rq#rf')));
         $this->assertSame('http:///?rq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '///?rq#rf'));
+                '///?rq#rf')));
 
         // Relative URL has absolute path but no scheme or authority, so fill in both and remove dots from path
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/'));
+                '/')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/.'));
+                '/.')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/..'));
+                '/..')));
         $this->assertSame('http://example.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/rpath'));
+                '/rpath')));
         $this->assertSame('http://example.com/rpath/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/rpath/'));
+                '/rpath/')));
         $this->assertSame('http://example.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/rpath/.'));
+                '/rpath/.')));
         $this->assertSame('http://example.com/rpath/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/rpath/./'));
+                '/rpath/./')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/rpath/../'));
+                '/rpath/../')));
         $this->assertSame('http://example.com/here',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/rpath/../here'));
+                '/rpath/../here')));
         $this->assertSame('http://example.com/rpath/?rq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/rpath/?rq#rf'));
+                '/rpath/?rq#rf')));
         $this->assertSame('http://example.com/?rq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '/rpath/..?rq#rf'));
+                '/rpath/..?rq#rf')));
 
         // Relative URL has no scheme, authority, or path, so fill in (only case where base query is copied)
     $this->assertSame('http://example.com/path?rq#rf',
-        Url::toAbsolute(
+        rawurldecode(Url::toAbsolute(
             'http://example.com/path?bq#bf',
-            '?rq#rf'));
+            '?rq#rf')));
         $this->assertSame('http://example.com/path?#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '?#rf'));
+                '?#rf')));
         $this->assertSame('http://example.com/path?#',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '?#'));
+                '?#')));
         $this->assertSame('http://example.com/path?',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '?'));
+                '?')));
         $this->assertSame('http://example.com/path?bq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '#rf'));
+                '#rf')));
         $this->assertSame('http://example.com/path?bq#',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '#'));
+                '#')));
 
         // Relative URL has relative path, so merge paths and remove dots from path
         $this->assertSame('http://example.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/?bq#bf',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/rpath/here',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                'rpath/here'));
+                'rpath/here')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                'rpath/..'));
+                'rpath/..')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                '..'));
+                '..')));
         $this->assertSame('http://example.com/rpath/here#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                'rpath/here#rf'));
+                'rpath/here#rf')));
         $this->assertSame('http://example.com/rpath/here?rq',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                'rpath/here?rq'));
+                'rpath/here?rq')));
         $this->assertSame('http://example.com/rpath/here?rq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
-                'rpath/here?rq#rf'));
+                'rpath/here?rq#rf')));
         $this->assertSame('http://example.com/path/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/base',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/path/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/?bq#bf',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/path/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/base?bq#bf',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/path/rpath/here',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/base?bq#bf',
-                'rpath/here'));
+                'rpath/here')));
         $this->assertSame('http://example.com/path/rpath/here?rq#rf',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/base?bq#bf',
-                'rpath/here?rq#rf'));
+                'rpath/here?rq#rf')));
         $this->assertSame('http://example.com/path/base/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/base/..',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/path/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/base/../',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/path/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/./base/../',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/../base',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/base/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/../base/..',
-                'rpath'));
+                'rpath')));
         $this->assertSame('http://example.com/rpath',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path/../base/../',
-                'rpath'));
+                'rpath')));
 
         // Remove single dots in path
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '.'));
+                '.')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/.'));
+                '/.')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/./'));
+                '/./')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/./.'));
+                '/./.')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/././'));
+                '/././')));
         $this->assertSame('http://example.com/a/b',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/a/./b/.'));
+                '/a/./b/.')));
         $this->assertSame('http://example.com/a/b/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/a/./b/./'));
+                '/a/./b/./')));
         $this->assertSame('http://example.com/b/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '././b/./'));
+                '././b/./')));
 
         // Remove previous segment on double dots in path
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '..'));
+                '..')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/..'));
+                '/..')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/../'));
+                '/../')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '../'));
+                '../')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '../../'));
+                '../../')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '../../..'));
+                '../../..')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                'a/../../../'));
+                'a/../../../')));
         $this->assertSame('http://example.com/',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/a/../../../'));
+                '/a/../../../')));
         $this->assertSame('http://example.com/a/g',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                '/a/b/c/./../../g'));
+                '/a/b/c/./../../g')));
         $this->assertSame('http://example.com/mid/6',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                'mid/content=5/../6'));
+                'mid/content=5/../6')));
 
         // Do nothing to tripple dots in path
         $this->assertSame('http://example.com/blah/.../foo',
-            Url::toAbsolute(
+            rawurldecode(Url::toAbsolute(
                 'http://example.com/path',
-                'blah/.../foo'));
+                'blah/.../foo')));
     }
 }
