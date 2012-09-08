@@ -2,7 +2,6 @@
 namespace Heartsentwined\Test\Url;
 
 use Heartsentwined\Url\Url;
-use Heartsentwined\Url\Exception;
 
 class UrlTest extends \PHPUnit_Framework_TestCase
 {
