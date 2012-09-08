@@ -84,8 +84,12 @@ class Url
         // If relative URL path doesn't start with /, merge with base path
         if ( $r['path'][0] != '/' )
         {
-            $base = mb_strrchr( $b['path'], '/', TRUE, 'UTF-8' );
-            if ( $base === FALSE ) $base = '';
+            if (!isset($b['path'])) {
+                $base = '';
+            } else {
+                $base = mb_strrchr( $b['path'], '/', TRUE, 'UTF-8' );
+                if ( $base === FALSE ) $base = '';
+            }
             $r['path'] = $base . '/' . $r['path'];
         }
         $r['path'] = self::removeDotSegments( $r['path'] );

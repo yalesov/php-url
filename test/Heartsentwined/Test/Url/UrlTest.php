@@ -9,9 +9,9 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     public function testToAbsolute()
     {
         // Fail on unparsable relative URL
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+        $this->assertFalse(Url::toAbsolute(
             'http://example.com/path?bq#bf',
-            'bad://\slash.com/brac[kets]')));
+            'bad://\slash.com/brac[kets]'));
 
         // Relative URL has scheme, only remove dots from path if hierarchical
         $this->assertSame('http://whatever.com/path/here?rq#rf',
@@ -36,47 +36,47 @@ class UrlTest extends \PHPUnit_Framework_TestCase
                 'mailto:user/../whatever.com')));
 
         // Fail on unparsable base URL
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+        $this->assertFalse(Url::toAbsolute(
             'bad://\slash.com/brac[kets]',
-            '/path/./here?rq#rf')));
+            '/path/./here?rq#rf'));
 
         // Fail on non-absolute base URL missing scheme or host
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+        $this->assertFalse(Url::toAbsolute(
             '//example.com/path?bq#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             '///path?bq#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             '/path?bq#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             'http:/path?bq#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             'path?bq#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             'http:path?bq#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             '?bq#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             'http:?bq#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             '#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             'http:#bf',
-            '/path/./here?rq#rf')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path/./here?rq#rf'));
+        $this->assertFalse(Url::toAbsolute(
             'mailto:user@example.com',
-            '/path')));
-        $this->assertFalse(rawurldecode(Url::toAbsolute(
+            '/path'));
+        $this->assertFalse(Url::toAbsolute(
             'mailto:user@example.com',
-            '//whatever.com/path')));
+            '//whatever.com/path'));
 
         // Relative URL has authority, fill in scheme and remove dots from path
         $this->assertSame('http://whatever.com',
