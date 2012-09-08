@@ -18,4 +18,48 @@ A collection of url-related functions.
 
 # Usage
 
-todo
+Turn a URL, relative or absolute, into an absolute URL:
+
+```php
+use Heartsentwined\Url\Url;
+$url = Url::toAbsolute($baseUrl, $relativeUrl);
+```
+
+Filter out `.` and `..` segments from URL's path:
+
+```php
+use Heartsentwined\Url\Url;
+$path = Url::removeDotSegments($path);
+```
+
+Split a URL to its components: (reverse of `Url::join()`)
+
+```php
+use Heartsentwined\Url\Url;
+$parts = Url::split($url);
+// one or more of the following keys may be present:
+// $parts['scheme']     = (scheme, such as "http")
+// $parts['host']       = (host name, IPv4, or IPv6 address)
+// $parts['port']       = (the port number)
+// $parts['user']       = (user name)
+// $parts['pass']       = (user password)
+// $parts['path']       = (path, e.g. a file path for "http")
+// $parts['query']      = (the query)
+// $parts['fragment']   = (the fragment)
+```
+
+Join together URL components to form a complete URL: (reverse of `Url::split()`)
+
+```php
+use Heartsentwined\Url\Url;
+$url = Url::join(array(
+    'scheme'    => $scheme,
+    'host'      => $host,
+    'port'      => $port,
+    'user'      => $user,
+    'pass'      => $pass,
+    'path'      => $path,
+    'query'     => $query,
+    'fragment'  => $fragment,
+));
+```
