@@ -2,7 +2,6 @@
 namespace Heartsentwined\Url;
 
 use Heartsentwined\ArgValidator\ArgValidator;
-use Heartsentwined\Url\Exception;
 
 /**
  * adapted from @author david r. nadeau, nadeausoftware.com
