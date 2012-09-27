@@ -23,7 +23,7 @@ class Url
      *
      * @see http://nadeausoftware.com/node/79
      *
-     * @param string $baseurl the absolute base url. "http://www.example.com"
+     * @param string $baseurl     the absolute base url. "http://www.example.com"
      * @param string $relativeurl the relative url to convert (also works for absolute url).
      *
      * @return string :
@@ -40,10 +40,10 @@ class Url
         $r = self::split( $relativeUrl );
         if ( $r === FALSE )
             return FALSE;
-        if ( !empty( $r['scheme'] ) )
-        {
+        if ( !empty( $r['scheme'] ) ) {
             if ( !empty( $r['path'] ) && $r['path'][0] == '/' )
                 $r['path'] = self::removeDotSegments( $r['path'] );
+
             return self::join( $r );
         }
 
@@ -54,10 +54,10 @@ class Url
         $r['scheme'] = $b['scheme'];
 
         // If relative URL has an authority, clean path and return.
-        if ( isset( $r['host'] ) )
-        {
+        if ( isset( $r['host'] ) ) {
             if ( !empty( $r['path'] ) )
                 $r['path'] = self::removeDotSegments( $r['path'] );
+
             return self::join( $r );
         }
         unset( $r['port'] );
@@ -71,18 +71,17 @@ class Url
         if ( isset( $b['pass'] ) ) $r['pass'] = $b['pass'];
 
         // If relative URL has no path, use base path
-        if ( empty( $r['path'] ) )
-        {
+        if ( empty( $r['path'] ) ) {
             if ( !empty( $b['path'] ) )
                 $r['path'] = $b['path'];
             if ( !isset( $r['query'] ) && isset( $b['query'] ) )
                 $r['query'] = $b['query'];
+
             return self::join( $r );
         }
 
         // If relative URL path doesn't start with /, merge with base path
-        if ( $r['path'][0] != '/' )
-        {
+        if ($r['path'][0] != '/') {
             if (!isset($b['path'])) {
                 $base = '';
             } else {
@@ -92,6 +91,7 @@ class Url
             $r['path'] = $base . '/' . $r['path'];
         }
         $r['path'] = self::removeDotSegments( $r['path'] );
+
         return self::join( $r );
     }
 
@@ -118,8 +118,7 @@ class Url
         // multi-byte character explode
         $inSegs  = preg_split( '!/!u', $path );
         $outSegs = array( );
-        foreach ( $inSegs as $seg )
-        {
+        foreach ($inSegs as $seg) {
             if ( $seg == '' || $seg == '.')
                 continue;
             if ( $seg == '..' )
@@ -134,6 +133,7 @@ class Url
         if ( $outPath != '/' &&
                 (mb_strlen($path)-1) == mb_strrpos( $path, '/', 'UTF-8' ) )
             $outPath .= '/';
+
         return $outPath;
     }
 
@@ -186,8 +186,7 @@ class Url
      */
     public static function join(array $parts, $encode=TRUE)
     {
-        if ( $encode )
-        {
+        if ($encode) {
             if ( isset( $parts['user'] ) )
                 $parts['user']     = rawurlencode( $parts['user'] );
             if ( isset( $parts['pass'] ) )
@@ -207,11 +206,9 @@ class Url
         $url = '';
         if ( !empty( $parts['scheme'] ) )
             $url .= $parts['scheme'] . ':';
-        if ( isset( $parts['host'] ) )
-        {
+        if ( isset( $parts['host'] ) ) {
             $url .= '//';
-            if ( isset( $parts['user'] ) )
-            {
+            if ( isset( $parts['user'] ) ) {
                 $url .= $parts['user'];
                 if ( isset( $parts['pass'] ) )
                     $url .= ':' . $parts['pass'];
@@ -232,6 +229,7 @@ class Url
             $url .= '?' . $parts['query'];
         if ( isset( $parts['fragment'] ) )
             $url .= '#' . $parts['fragment'];
+
         return $url;
     }
 
@@ -372,7 +370,6 @@ class Url
          $xurl          = '^(' . $xscheme . ':)?' .  $xapath . '?' .
              '(\?' . $xqueryfrag . ')?(#' . $xqueryfrag . ')?$';
 
-
          // Split the URL into components.
          if ( !preg_match( '!' . $xurl . '!', $url, $m ) )
              return FALSE;
@@ -412,6 +409,7 @@ class Url
              $parts['query']    = rawurldecode( $parts['query'] );
          if ( !empty($parts['fragment']) )
              $parts['fragment'] = rawurldecode( $parts['fragment'] );
+
          return $parts;
      }
 }
