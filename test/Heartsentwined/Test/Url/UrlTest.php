@@ -115,7 +115,8 @@ class UrlTest extends \PHPUnit_Framework_TestCase
                 'http://example.com/path?bq#bf',
                 '///?rq#rf')));
 
-        // Relative URL has absolute path but no scheme or authority, so fill in both and remove dots from path
+        // Relative URL has absolute path but no scheme or authority,
+        // so fill in both and remove dots from path
         $this->assertSame('http://example.com/',
             rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
@@ -161,11 +162,12 @@ class UrlTest extends \PHPUnit_Framework_TestCase
                 'http://example.com/path?bq#bf',
                 '/rpath/..?rq#rf')));
 
-        // Relative URL has no scheme, authority, or path, so fill in (only case where base query is copied)
-    $this->assertSame('http://example.com/path?rq#rf',
-        rawurldecode(Url::toAbsolute(
-            'http://example.com/path?bq#bf',
-            '?rq#rf')));
+        // Relative URL has no scheme, authority, or path,
+        // so fill in (only case where base query is copied)
+        $this->assertSame('http://example.com/path?rq#rf',
+            rawurldecode(Url::toAbsolute(
+                'http://example.com/path?bq#bf',
+                '?rq#rf')));
         $this->assertSame('http://example.com/path?#rf',
             rawurldecode(Url::toAbsolute(
                 'http://example.com/path?bq#bf',
@@ -187,7 +189,8 @@ class UrlTest extends \PHPUnit_Framework_TestCase
                 'http://example.com/path?bq#bf',
                 '#')));
 
-        // Relative URL has relative path, so merge paths and remove dots from path
+        // Relative URL has relative path,
+        // so merge paths and remove dots from path
         $this->assertSame('http://example.com/rpath',
             rawurldecode(Url::toAbsolute(
                 'http://example.com',
