@@ -11,7 +11,7 @@ A collection of url-related functions.
 ```json
 {
     "require": {
-        "yalesov/url": "1.*"
+        "yalesov/url": "2.*"
     }
 }
 ```
