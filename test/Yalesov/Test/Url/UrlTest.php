@@ -1,7 +1,7 @@
 <?php
-namespace Heartsentwined\Test\Url;
+namespace Yalesov\Test\Url;
 
-use Heartsentwined\Url\Url;
+use Yalesov\Url\Url;
 
 class UrlTest extends \PHPUnit_Framework_TestCase
 {

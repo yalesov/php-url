@@ -1,6 +1,6 @@
-# Heartsentwined\Url
+# Yalesov\Url
 
-[![Build Status](https://secure.travis-ci.org/heartsentwined/url.png)](http://travis-ci.org/heartsentwined/url)
+[![Build Status](https://secure.travis-ci.org/yalesov/url.png)](http://travis-ci.org/yalesov/url)
 
 A collection of url-related functions.
 
@@ -11,7 +11,7 @@ A collection of url-related functions.
 ```json
 {
     "require": {
-        "heartsentwined/url": "1.*"
+        "yalesov/url": "1.*"
     }
 }
 ```
@@ -21,21 +21,21 @@ A collection of url-related functions.
 Turn a URL, relative or absolute, into an absolute URL:
 
 ```php
-use Heartsentwined\Url\Url;
+use Yalesov\Url\Url;
 $url = Url::toAbsolute($baseUrl, $relativeUrl);
 ```
 
 Filter out `.` and `..` segments from URL's path:
 
 ```php
-use Heartsentwined\Url\Url;
+use Yalesov\Url\Url;
 $path = Url::removeDotSegments($path);
 ```
 
 Split a URL to its components: (reverse of `Url::join()`)
 
 ```php
-use Heartsentwined\Url\Url;
+use Yalesov\Url\Url;
 $parts = Url::split($url);
 // one or more of the following keys may be present:
 // $parts['scheme']     = (scheme, such as "http")
@@ -51,7 +51,7 @@ $parts = Url::split($url);
 Join together URL components to form a complete URL: (reverse of `Url::split()`)
 
 ```php
-use Heartsentwined\Url\Url;
+use Yalesov\Url\Url;
 $url = Url::join(array(
     'scheme'    => $scheme,
     'host'      => $host,

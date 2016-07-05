@@ -1,7 +1,7 @@
 <?php
-namespace Heartsentwined\Url;
+namespace Yalesov\Url;
 
-use Heartsentwined\ArgValidator\ArgValidator;
+use Yalesov\ArgValidator\ArgValidator;
 
 /**
  * adapted from @author david r. nadeau, nadeausoftware.com
