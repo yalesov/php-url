@@ -1,6 +1,6 @@
 # Yalesov\Url
 
-[![Build Status](https://secure.travis-ci.org/yalesov/url.png)](http://travis-ci.org/yalesov/url)
+[![Build Status](https://travis-ci.org/yalesov/php-url.svg)](https://travis-ci.org/yalesov/php-url)
 
 A collection of url-related functions.
 
